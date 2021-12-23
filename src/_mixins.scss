@@ -1,0 +1,20 @@
+@mixin flexRegular($direction, $space) {
+  display: flex;
+  justify-content: $space;
+  align-items: center;
+  flex-direction: $direction;
+}
+@mixin gridRegular($gap) {
+  display: grid;
+  gap: $gap;
+}
+@mixin buttonRegular($buttonBack, $width, $height) {
+  transition: 0.4s ease-in;
+  background: $buttonBack;
+  border-radius: 42px;
+  box-sizing: border-box;
+  width: $width;
+  height: $height;
+  color: #fff;
+  outline: none;
+}
