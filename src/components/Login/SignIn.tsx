@@ -3,13 +3,13 @@ import style from './Signin.module.scss'
 //import { TextField } from '@material-ui/core'
 import TextInput from '../TextInput/TextInput'
 import { AuthContext } from '../../context/AuthContext.js'
-import {post} from '../../utils/axiosLib'
+import { post } from '../../utils/axiosLib'
 import { logger } from '../../utils/logger'
+//import { useNavigate } from 'react-router-dom'
 import { CircularProgress } from '@material-ui/core'
 
 import Logo from '../../images/icons/logo.svg'
 import Close from '../../images/icons/close.svg'
-
 
 interface Modal {
   modalStatus?: boolean
@@ -37,6 +37,7 @@ const Login: React.FC<Modal> = (props) => {
   })
 
   const [authState, setAuthState] = useContext<any>(AuthContext)
+  //const navigate = useNavigate()
 
   const inputHandler = (event: any) => {
     setUserInput({
@@ -45,44 +46,54 @@ const Login: React.FC<Modal> = (props) => {
     })
   }
 
-  const handleSubmit = async(event:any) => {
+ 
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
-    localStorage.removeItem("user")
+
     setAuthState({
       ...authState,
-      isFetching: true
+      isFetching: true,
     })
     setResponse({
       ...response,
       error: '',
     })
-    try{
-      const newUser = {
-        email: userInput.email,
-        password: userInput.password,
+    if (navigator.onLine) {
+      try {
+        const newUser = {
+          email: userInput.email,
+          password: userInput.password,
+        }
+        const endpoint = `${process.env.REACT_APP_BASE_URL}auth/login`
+        const logUserReq = await post(endpoint, newUser)
+        setAuthState({
+          ...authState,
+          user: logUserReq.data,
+          isFetching: false,
+          error: false,
+        })
+        //navigate('/home')
+        logger('REQ RESPONSE::: ', logUserReq)
+      } catch (err:any) {
+        setAuthState({
+          ...authState,
+          isFetching: false,
+          error: true,
+        })
+        logger(' ERROR::: ', err)
+        setResponse({
+          error: err?.response.data,
+          success: '',
+        })
       }
-      const endpoint = `${process.env.REACT_APP_BASE_URL}auth/login`
-      const logUserReq = await post(endpoint, newUser)
-      setAuthState({
-        user: logUserReq.data.user,
-        isFetching: false,
-        error: false
-      })
-      logger('REQ RESPONSE::: ', logUserReq)
-    }catch (err:any) {
-      setAuthState({
-        ...authState,
-        isFetching: false,
-        error: true
-      })
-      logger(' ERROR::: ', err)
+    } else {
       setResponse({
-        error: err?.response.data,
+        error: 'No internet connection',
         success: '',
       })
     }
   }
-  
 
   return (
     <>
@@ -128,11 +139,13 @@ const Login: React.FC<Modal> = (props) => {
                   <p>Forgot password?</p>
                   <p onClick={props.switchModal}>Sign up to TwitterMini</p>
                 </div>
-                <button disabled={authState.isFetching}>{authState.isFetching ? (
+                <button disabled={authState.isFetching}>
+                  {authState.isFetching ? (
                     <CircularProgress color="inherit" size="25px" />
                   ) : (
                     'Next'
-                  )}</button>
+                  )}
+                </button>
                 <p className={style.errMsg}>{response.error}</p>
                 <p className={style.successMsg}>{response.success}</p>
                 {/* <p className={style.successMsg}>{authState.user?.username}</p> */}
@@ -146,5 +159,3 @@ const Login: React.FC<Modal> = (props) => {
 }
 
 export default Login
-
-

@@ -17,6 +17,7 @@ interface Modal {
 
 interface User {
   name: string
+  username: string
   email: string
   password: string
   confirmPassword: string
@@ -31,6 +32,7 @@ const SignUp = (props: Modal) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [userInput, setUserInput] = useState<User>({
     name: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -69,29 +71,37 @@ const SignUp = (props: Modal) => {
         error: '',
       })
       //passwordConfirm.current.setCustomValidity('')
-      try {
-        const newUser = {
-          username: userInput.name,
-          email: userInput.email,
-          password: userInput.password,
-        }
+      if(navigator.onLine){
+        try {
+          const newUser = {
+            name: userInput.name,
+            username: userInput.username,
+            email: userInput.email,
+            password: userInput.password,
+          }
 
-        const endpoint = `${process.env.REACT_APP_BASE_URL}auth/signup`
-        const newUserReq = await post(endpoint, newUser)
-        logger('REQ RESPONSE::: ', newUserReq)
-        setIsLoading(false)
-        await setResponse({
-          error: '',
-          success: 'Account created successfully',
-        })
-        setTimeout(() => {
-          props.switchModal()
-        }, 1500)
-      } catch (err:any) {
-        setIsLoading(false)
-        logger(' ERROR::: ', err)
+          const endpoint = `${process.env.REACT_APP_BASE_URL}auth/signup`
+          const newUserReq = await post(endpoint, newUser)
+          logger('REQ RESPONSE::: ', newUserReq)
+          setIsLoading(false)
+          await setResponse({
+            error: '',
+            success: 'Account created successfully',
+          })
+          setTimeout(() => {
+            props.switchModal()
+          }, 1500)
+        } catch (err:any) {
+          setIsLoading(false)
+          logger(' ERROR::: ', err)
+          setResponse({
+            error: err?.response.data,
+            success: '',
+          })
+        }
+      }else {
         setResponse({
-          error: err?.response.data,
+          error: "No internet connection",
           success: '',
         })
       }
@@ -132,14 +142,28 @@ const SignUp = (props: Modal) => {
                   inputHandler={inputHandler}
                   //errMsg={errorMsg}
                 />
-                <TextInput
-                  labelName="Email"
-                  inputName="email"
-                  type="email"
-                  value={userInput.email}
-                  inputHandler={inputHandler}
-                  //errMsg={errorMsg}
-                />
+                <div className={style.doubleInputs}>
+                  <div className={style.diOne}>
+                    <TextInput
+                      labelName="Username"
+                      inputName="username"
+                      type="username"
+                      value={userInput.username}
+                      inputHandler={inputHandler}
+                      //errMsg={errorMsg}
+                    />
+                  </div>
+                  <div className={style.diOne}>
+                    <TextInput
+                      labelName="Email"
+                      inputName="email"
+                      type="email"
+                      value={userInput.email}
+                      inputHandler={inputHandler}
+                      //errMsg={errorMsg}
+                    />
+                  </div>
+                </div>
                 <div className={style.doubleInputs}>
                   <div className={style.diOne}>
                     <TextInput

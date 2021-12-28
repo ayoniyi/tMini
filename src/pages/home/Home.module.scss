@@ -1,0 +1,16 @@
+@import '../../mixins';
+.header {
+  position: fixed;
+  z-index: 3;
+  width: 47%;
+  max-width: 600px;
+  //   margin-bottom: 1em;
+  @include flexRegular(row, space-between);
+  border-bottom: 1px solid #2f3336;
+  padding: 1.5em 1em;
+  background: black;
+  color: #fff;
+  h1 {
+    font-size: 1.3em;
+  }
+}

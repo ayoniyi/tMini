@@ -1,0 +1,185 @@
+@import '../../variables';
+@import '../../mixins';
+
+.container {
+  background: black;
+  //background: rgb(39, 38, 38);
+  height: 100vh;
+  color: #fff;
+  padding: 1em 1em 1em 1em;
+
+  position: fixed;
+  width: 300px;
+  // margin-right: 0;
+  // top: 0;
+}
+@media (max-width: 1279px) {
+  .container {
+    width: 260px;
+  }
+}
+.top {
+  //background: gray;
+  cursor: pointer;
+  img {
+    //width: 15%;
+    width: 35px;
+    height: 60px;
+    @include transitionRegular();
+    &:hover {
+      transform: rotateY(180deg);
+    }
+  }
+}
+.items {
+  margin: 1em 0 2em 0;
+  //padding-left: .5em;
+}
+.navItem {
+  //background: gray;
+  @include flexRegular(row, flex-start);
+  width: 65%;
+  max-width: 190px;
+  padding: 0.6em 0.5em 0.6em 0.5em;
+  margin-bottom: 0;
+  cursor: pointer;
+  &:hover {
+    background: rgba(128, 128, 128, 0.281);
+    border-radius: 22px;
+  }
+  img {
+    margin-right: 1em;
+    //width: 23%;
+    width: 28px;
+    height: 26px;
+  }
+  p {
+    font-size: 1.1em;
+  }
+  margin-bottom: 1.7em;
+}
+.tweet {
+  button {
+    @include buttonRegular($blueBtn, 80%, 42px);
+    border: 0;
+    max-width: 210px;
+    &:hover {
+      background: $blueDark;
+    }
+  }
+  img {
+    display: none;
+  }
+}
+
+.active {
+  p {
+    font-weight: bolder;
+  }
+}
+
+.bottomBox {
+  //background: rgba(128, 128, 128, 0.603);
+  position: absolute;
+  bottom: 1em;
+  width: 80%;
+}
+.btmItem {
+  @include flexRegular(row, flex-start);
+  width: 85%;
+  //max-width: 0px;
+  padding: 0.6em 0.5em 0.6em 0.5em;
+  margin-bottom: 0;
+  cursor: pointer;
+  &:hover {
+    background: rgba(128, 128, 128, 0.281);
+    border-radius: 22px;
+  }
+  img {
+    margin-right: 1em;
+    //width: 23%;
+    width: 62px;
+    height: 42px;
+  }
+  p {
+    font-size: 1.1em;
+  }
+  margin-bottom: 1.7em;
+}
+
+@media (max-width: 1160px) {
+  .container {
+    width: 11%;
+  }
+  .items {
+    margin: 0;
+  }
+  .navItem {
+    @include flexRegular(row, center);
+    padding: 1em;
+    //background: gray;
+    img {
+      margin-right: 0;
+    }
+    p {
+      display: none;
+    }
+    margin-bottom: 0.9em;
+  }
+  .tweet {
+    @include flexRegular(row, center);
+    width: 85%;
+    margin-top: 2.5em;
+    //background: gray;
+    button {
+      display: none;
+    }
+    img {
+      display: block;
+      width: 100%;
+      min-width: 38px;
+      height: 39px;
+      //width: 90%;
+    }
+  }
+}
+@media (max-width: 550px) {
+  .container {
+    height: 8vh;
+    width: 100%;
+    padding: 0.5em 0;
+    bottom: 0;
+    margin: 0;
+    // background: pink;
+  }
+  .top {
+    display: none;
+  }
+  .items {
+    margin: 0;
+    @include flexRegular(row, center);
+    align-items: center;
+    //background: gray;
+    border-top: 1px solid rgba(128, 128, 128, 0.335);
+    padding: 1em 1em;
+    width: 100vw;
+  }
+  .navItem {
+    //background: pink;
+    width: 100%;
+    max-width: 900px;
+    padding: 0;
+    margin-right: 2em;
+    margin-bottom: 0;
+    img {
+      margin-right: 0;
+    }
+    &:nth-of-type(4) {
+      margin-right: 0;
+    }
+  }
+
+  .tweet {
+    display: none;
+  }
+}

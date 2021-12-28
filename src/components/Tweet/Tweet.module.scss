@@ -1,0 +1,126 @@
+@import '../../variables';
+@import '../../mixins';
+
+.container {
+  padding: 1em 1em;
+  border-bottom: 1px solid #2f3336;
+  position: relative;
+  .content {
+    //background: bisque;
+    @include flexRegular(row, flex-start);
+    align-items: flex-start;
+    color: #fff;
+    .left {
+      margin-right: 0.5em;
+    }
+    .right {
+      //   background: lavender;
+      padding: 0 0.3em;
+      width: 100%;
+      .rightTop {
+        //background: rgba(128, 128, 128, 0.493);
+        @include flexRegular(row, space-between);
+        align-items: center;
+        img {
+          cursor: pointer;
+        }
+        .rightTitles {
+          @include flexRegular(row, flex-start);
+          p {
+            margin-right: 0.4em;
+          }
+          .handle {
+            color: rgba(151, 150, 150, 0.767);
+            font-size: 0.94em;
+          }
+          .time {
+            color: rgba(151, 150, 150, 0.945);
+            font-size: 0.94em;
+          }
+        }
+        .right2 {
+          margin-right: 0.5em;
+        }
+        .more {
+          height: 100%;
+          cursor: pointer;
+          // background: pink;
+          @include flexRegular(column, center);
+          align-items: center;
+          .moreBox {
+            position: absolute;
+            z-index: 4;
+            background: black;
+            padding: 0.2em;
+            width: 35%;
+            right: 0;
+            top: 1em;
+            border-radius: 6px;
+            border: 1px solid rgba(128, 128, 128, 0.651);
+            box-shadow: 1px 0px 7px #ffffff94;
+            .moreTop {
+              @include flexRegular(row, flex-end);
+              align-items: flex-end;
+              padding: 0 0.5em;
+            }
+
+            .moreItem {
+              @include flexRegular(row, flex-start);
+              // justify-content: center;
+              padding: 0.7em 0.5em 0.7em 1.2em;
+              .red {
+                color: #ef1c5c;
+              }
+              img {
+                width: 16px;
+                height: 16px;
+                margin-right: 1em;
+              }
+              // &:hover {
+              //   background: rgba(128, 128, 128, 0.5);
+              // }
+            }
+          }
+        }
+      }
+      .rightDesc {
+        margin-top: 1em;
+        img {
+          width: 100%;
+          margin-top: 1em;
+          object-fit: contain;
+          border-radius: 20px;
+        }
+      }
+      .rightBtm {
+        margin-top: 1em;
+        @include flexRegular(row, flex-start);
+
+        .actions {
+          @include flexRegular(row, flex-start);
+          margin-right: 5em;
+          img {
+            margin-right: 1em;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            transition: 0.3s ease-in;
+            &:focus {
+              transform: scale(1.4);
+            }
+          }
+          p {
+            color: #536471;
+            font-size: 0.9em;
+          }
+          .red {
+            color: #ef1c5c;
+          }
+          .green {
+            color: #0cb245;
+          }
+        }
+      }
+    }
+  }
+}

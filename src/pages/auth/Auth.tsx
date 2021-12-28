@@ -71,6 +71,8 @@ const Auth = () => {
     }
   }
 
+  localStorage.removeItem('user')
+
   return (
     <div className={style.container}>
       {modalValues.modalState && (
