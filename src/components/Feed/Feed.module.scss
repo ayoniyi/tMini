@@ -1,0 +1,9 @@
+@import '../../variables';
+@import '../../mixins';
+.loaderBox {
+  color: $blueTxt;
+  @include flexRegular(row, center);
+  align-items: center;
+  padding: 4em 1em;
+  //background: gray;
+}

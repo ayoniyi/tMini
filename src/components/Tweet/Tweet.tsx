@@ -1,13 +1,14 @@
 import { useState, useEffect, useContext } from 'react'
 import { get, put } from '../../utils/axiosLib'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { format } from 'timeago.js'
 import { AuthContext } from '../../context/AuthContext.js'
 import { motion } from 'framer-motion'
 //import { Cancel } from '@material-ui/icons'
 
 import style from './Tweet.module.scss'
-import avi from '../../images/others/avatar.svg'
+import avi from '../../images/others/avatar.jpeg'
 import more from '../../images/icons/more.svg'
 import reply from '../../images/icons/reply.svg'
 import retweet from '../../images/icons/retweet.svg'
@@ -31,9 +32,7 @@ const Tweet = (props: any) => {
   const [modal, setModal] = useState<boolean>(false)
   // const time: any = format(props.tweetFull.createdAt)
   // const timeForm: any = time.charAt(0) + time.charAt(2)
-
   const tweet: any = props.tweetFull
-
   const [likeStat, setLikeStat] = useState<LikeStat>({
     like: tweet.likes.length,
     isLiked: false,
@@ -90,7 +89,7 @@ const Tweet = (props: any) => {
       console.log(req)
       setAuthState({
         ...authState,
-        latestTweet: '',
+        latestTweet: Math.random() * 10,
       })
     } catch (err) {
       console.log('request payload  ', body)
@@ -132,14 +131,14 @@ const Tweet = (props: any) => {
   return (
     <div className={style.container} onClick={modalStateHandler}>
       <div className={style.content}>
-        <div className={style.left}>
-          <img src={avi} alt="avatar" />
-        </div>
+        <Link to={`profile/${user.username}`} className={style.left}>
+          <img src={user.profilePicture || avi} alt="avatar" />
+        </Link>
         <div className={style.right}>
           <div className={style.rightTop}>
             <div className={style.rightTitles}>
               <p className={style.name}> {user.name || user.username}</p>
-              <p className={style.handle}> {user.username}</p>
+              <p className={style.handle}> @{user.username}</p>
               {user.isAdmin && (
                 <img className={style.right2} src={V} alt="verified" />
               )}
@@ -167,14 +166,6 @@ const Tweet = (props: any) => {
                       },
                     }}
                   >
-                    {/* <div className={style.moreTop}>
-                    <Cancel
-                      
-                      className={style.cancel}
-                      onClick={() => setModal(!modal)}
-                    />
-                  </div> */}
-
                     <div className={style.moreItem} onClick={handleDelete}>
                       <img src={Del} alt="delete" />
                       <p className={style.red}>Delete tweet</p>
@@ -191,7 +182,7 @@ const Tweet = (props: any) => {
           <div className={style.rightBtm}>
             <div className={style.actions}>
               <img src={reply} alt="reply" />
-              <p>0</p>
+              <p></p>
             </div>
             <div className={style.actions}>
               <img
@@ -199,10 +190,12 @@ const Tweet = (props: any) => {
                 alt="retweet"
                 onClick={retweetHandler}
               />
-              <p className={retweetStat.isRetweeted ? style.green : ''}>
-                {' '}
-                {retweetStat.retweet}
-              </p>
+              {retweetStat.retweet > 0 && (
+                <p className={retweetStat.isRetweeted ? style.green : ''}>
+                  {' '}
+                  {retweetStat.retweet}
+                </p>
+              )}
             </div>
             <div className={style.actions}>
               <img
@@ -211,10 +204,12 @@ const Tweet = (props: any) => {
                 onClick={likeHandler}
                 //className="animate__animated animate__zoomInUp"
               />
-              <p className={likeStat.isLiked ? style.red : ''}>
-                {' '}
-                {likeStat.like}
-              </p>
+              {likeStat.like > 0 && (
+                <p className={likeStat.isLiked ? style.red : ''}>
+                  {' '}
+                  {likeStat.like}
+                </p>
+              )}
             </div>
           </div>
         </div>

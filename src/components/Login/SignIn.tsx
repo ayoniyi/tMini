@@ -5,7 +5,7 @@ import TextInput from '../TextInput/TextInput'
 import { AuthContext } from '../../context/AuthContext.js'
 import { post } from '../../utils/axiosLib'
 import { logger } from '../../utils/logger'
-//import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { CircularProgress } from '@material-ui/core'
 
 import Logo from '../../images/icons/logo.svg'
@@ -37,7 +37,7 @@ const Login: React.FC<Modal> = (props) => {
   })
 
   const [authState, setAuthState] = useContext<any>(AuthContext)
-  //const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const inputHandler = (event: any) => {
     setUserInput({
@@ -45,8 +45,6 @@ const Login: React.FC<Modal> = (props) => {
       [event.target.name]: event.target.value,
     })
   }
-
- 
 
   const handleSubmit = async (event: any) => {
     event.preventDefault()
@@ -73,7 +71,7 @@ const Login: React.FC<Modal> = (props) => {
           isFetching: false,
           error: false,
         })
-        //navigate('/home')
+        navigate('/')
         logger('REQ RESPONSE::: ', logUserReq)
       } catch (err:any) {
         setAuthState({

@@ -5,7 +5,7 @@ import PageContent from '../../components/PageContent/PageContent'
 import Share from '../../components/Share/Share'
 import Feed from '../../components/Feed/Feed'
 
-import style from './Home.module.scss'
+import style from '../profile/Profile.module.scss'
 import star from '../../images/icons/star2.svg'
 
 const Home = () => {

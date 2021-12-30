@@ -12,6 +12,14 @@
     color: #fff;
     .left {
       margin-right: 0.5em;
+      img {
+        //width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        transition: 0.17s ease-in;
+      }
     }
     .right {
       //   background: lavender;
@@ -56,8 +64,8 @@
             right: 0;
             top: 1em;
             border-radius: 6px;
-            border: 1px solid rgba(128, 128, 128, 0.651);
-            box-shadow: 1px 0px 7px #ffffff94;
+            border: 1px solid rgba(128, 128, 128, 0.397);
+            box-shadow: 1px 0px 7px #ffffff56;
             .moreTop {
               @include flexRegular(row, flex-end);
               align-items: flex-end;
@@ -98,7 +106,8 @@
 
         .actions {
           @include flexRegular(row, flex-start);
-          margin-right: 5em;
+          width: 95%;
+          //background: pink;
           img {
             margin-right: 1em;
             cursor: pointer;

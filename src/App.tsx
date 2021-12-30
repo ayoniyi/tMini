@@ -19,6 +19,7 @@ function App() {
     <div>
       <Router>
         <Routes>
+          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={authState.user ? <Home /> : <Auth />} />
           <Route path="/profile/:username" element={<Profile />} />
         </Routes>

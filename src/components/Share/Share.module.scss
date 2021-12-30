@@ -9,9 +9,17 @@
 .top {
   @include flexRegular(row, flex-start);
 
-  img {
-    margin-right: 1em;
+  .topImg {
+    img {
+      margin-right: 1em;
+      object-fit: cover;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      transition: 0.17s ease-in;
+    }
   }
+
   input {
     outline: none;
     color: rgba(255, 255, 255, 0.87);

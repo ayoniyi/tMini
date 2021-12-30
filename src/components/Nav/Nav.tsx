@@ -1,5 +1,7 @@
+import { useContext } from 'react'
 import style from './Nav.module.scss'
-//import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext.js'
 
 // assets
 import Logo from '../../images/icons/logo.svg'
@@ -12,15 +14,17 @@ import Notificationsfill from '../../images/icons/nav/bell-fill.svg'
 import Profile from '../../images/icons/nav/profile.svg'
 import Profilefill from '../../images/icons/nav/profile-fill.svg'
 import Tweet from '../../images/icons/nav/tweet2.svg'
-import avi from '../../images/others/avatar.svg'
+import avi from '../../images/others/avatar.jpeg'
 
 const Nav = (props: any) => {
   const page: string = props.currentPage
-  //const navigate = useNavigate()
+  const navigate = useNavigate()
+  const [authState] = useContext<any>(AuthContext)
+  const user: any = authState.user.user
 
   const handleLogout = () => {
+    navigate('/auth')
     localStorage.removeItem('user')
-    //navigate('/')
     window.location.reload()
   }
   return (
@@ -31,22 +35,24 @@ const Nav = (props: any) => {
             <img src={Logo} alt="logo" />
           </div>
           <div className={style.items}>
-            <div
+            <Link
               className={
                 page === 'Home'
                   ? style.navItem + ' ' + style.active
                   : style.navItem
               }
+              to="/"
             >
               <img src={page === 'Home' ? Homefill : Home} alt="home" />
               <p>Home</p>
-            </div>
-            <div
+            </Link>
+            <Link
               className={
                 page === 'Notifications'
                   ? style.navItem + ' ' + style.active
                   : style.navItem
               }
+              to=""
             >
               <img
                 src={
@@ -55,7 +61,7 @@ const Nav = (props: any) => {
                 alt="notifications"
               />
               <p>Notifications</p>
-            </div>
+            </Link>
             <div
               className={
                 page === 'Messsage'
@@ -69,19 +75,20 @@ const Nav = (props: any) => {
               />
               <p>Messages</p>
             </div>
-            <div
+            <Link
               className={
                 page === 'Profile'
                   ? style.navItem + ' ' + style.active
                   : style.navItem
               }
+              to={`/profile/${user.username}`}
             >
               <img
                 src={page === 'Profile' ? Profilefill : Profile}
                 alt="profile"
               />
               <p>Profile</p>
-            </div>
+            </Link>
 
             <div className={style.tweet}>
               <button>Tweet</button>
@@ -90,7 +97,7 @@ const Nav = (props: any) => {
 
             <div className={style.bottomBox}>
               <div className={style.btmItem} onClick={handleLogout}>
-                <img src={avi} alt="avi" />
+                <img src={user.profilePicture || avi} alt="avi" />
                 <p>Logout</p>
               </div>
             </div>

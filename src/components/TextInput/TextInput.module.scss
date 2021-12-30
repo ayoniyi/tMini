@@ -3,7 +3,7 @@
 
 .inputBox {
   //background: lavender;
-  margin: 2em 0 2.2em 0;
+  margin: 2em 0 2.7em 0;
   //color: black;
   color: #fff;
   @include flexRegular(column, flex-start);
@@ -74,6 +74,15 @@
     }
   }
 }
+// .field2 {
+//   padding-top: 20px;
+//   width: 10%;
+//   height: 90px;
+//   border: 1px solid gray;
+//   border-radius: 6px;
+//   outline: none;
+//   background: none;
+// }
 @media (max-width: 1080px) {
   .inputBox {
     //background: lavender;

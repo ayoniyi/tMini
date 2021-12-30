@@ -6,7 +6,7 @@ import { logger } from '../../utils/logger'
 import { AuthContext } from '../../context/AuthContext'
 import { CircularProgress } from '@material-ui/core'
 
-import avi from '../../images/others/avatar.svg'
+import avi from '../../images/others/avatar.jpeg'
 import pic from '../../images/icons/image.svg'
 
 const Share = () => {
@@ -67,7 +67,9 @@ const Share = () => {
     <div className={style.container}>
       <form onSubmit={handleSubmit}>
         <div className={style.top}>
-          <img src={avi} alt="avi" />
+          <div className={style.topImg}>
+            <img src={user.profilePicture || avi} alt="avi" />
+          </div>
           <input
             type="text"
             placeholder="What's happening?"
