@@ -82,7 +82,7 @@ const Nav = (props: any) => {
               {notes >= 1 && (
                 <div className={style.alert}>
                   {' '}
-                  <p>{notes}</p>
+                  <h4 className={style.ap}>{notes}</h4>
                 </div>
               )}
 
