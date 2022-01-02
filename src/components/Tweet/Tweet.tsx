@@ -210,7 +210,7 @@ const Tweet = (props: any) => {
           <div className={style.rightBtm}>
             <Link to={`/singletweet/${tweet._id}`} className={style.actions}>
               <img src={reply} alt="reply" />
-              <p></p>
+              {tweet.replies.length > 0 && <p>{tweet.replies.length}</p>}
             </Link>
             <div className={style.actions}>
               <img
