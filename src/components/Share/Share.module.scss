@@ -2,9 +2,12 @@
 @import '../../mixins';
 
 .container {
-  margin-top: 5em;
   padding: 1em;
   border-bottom: 1px solid #2f3336;
+  width: 100%;
+}
+.m5 {
+  margin-top: 5em;
 }
 .top {
   @include flexRegular(row, flex-start);

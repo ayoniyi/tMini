@@ -9,12 +9,13 @@ import { CircularProgress } from '@material-ui/core'
 import avi from '../../images/others/avatar.jpeg'
 import pic from '../../images/icons/image.svg'
 
-const Share = () => {
+const ShareReply = (props: any) => {
   const [tweet, setTweet] = useState<string>('')
   const [file, setFile] = useState<any>('')
   const [authState, setAuthState] = useContext<any>(AuthContext)
-  const token: string = authState.user.token
+  //const token: string = authState.user.token
   const user: any = authState.user.user
+  const tweetId: any = props.tweetId
 
   const handleChange = (event: any) => {
     setTweet(event.target.value)
@@ -47,24 +48,25 @@ const Share = () => {
       desc: tweet,
       img: s3ImgUrl,
     }
-    const endpoint = `${process.env.REACT_APP_BASE_URL}post`
-    const headers = {
-      'auth-token': `${token}`,
-      'Content-Type': 'application/json',
-    }
-    const newPostReq = await post(endpoint, newTweet, headers)
+    const endpoint = `${process.env.REACT_APP_BASE_URL}post/reply/${tweetId}`
+    const newPostReq = await post(endpoint, newTweet)
+    // //logger(tweetId)
+    // const endpoint2 = `${process.env.REACT_APP_BASE_URL}post/reply/${tweetId}`
+    // const addAsReply = await put(endpoint2, { userId: user._id })
+    //logger(addAsReply)
     setAuthState({
       ...authState,
       isFetching: false,
       latestTweet: tweet,
     })
     logger(newPostReq)
+    // logger('reply', addAsReply)
     setTweet('')
     setFile(null)
   }
 
   return (
-    <div className={style.container + ' ' + style.m5}>
+    <div className={style.container}>
       <form onSubmit={handleSubmit}>
         <div className={style.top}>
           <div className={style.topImg}>
@@ -72,7 +74,7 @@ const Share = () => {
           </div>
           <input
             type="text"
-            placeholder="What's happening?"
+            placeholder="Tweet your reply"
             value={tweet}
             onChange={handleChange}
           />
@@ -100,7 +102,7 @@ const Share = () => {
             {authState.isFetching ? (
               <CircularProgress color="inherit" size="25px" />
             ) : (
-              'Tweet'
+              'Reply'
             )}
           </button>
         </div>
@@ -109,4 +111,4 @@ const Share = () => {
   )
 }
 
-export default Share
+export default ShareReply

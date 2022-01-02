@@ -7,7 +7,6 @@
   height: 100vh;
   color: #fff;
   padding: 1em 1em 0em 1em;
-
   position: fixed;
   width: 300px;
   // margin-right: 0;
@@ -37,6 +36,7 @@
 }
 .navItem {
   //background: gray;
+  position: relative;
   @include flexRegular(row, flex-start);
   width: 65%;
   max-width: 190px;
@@ -53,10 +53,28 @@
     width: 28px;
     height: 26px;
   }
+  .alert {
+    position: absolute;
+    @include flexRegular(row, center);
+    align-items: center;
+    top: -3px;
+    left: 20px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    color: #fff;
+    background: #ef1c5c;
+  }
   p {
     font-size: 1.1em;
   }
   margin-bottom: 1.7em;
+}
+.disable {
+  background: rgba(128, 128, 128, 0.281);
+  border-radius: 22px;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 .tweet {
   button {

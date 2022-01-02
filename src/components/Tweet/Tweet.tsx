@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { format } from 'timeago.js'
 import { AuthContext } from '../../context/AuthContext.js'
 import { motion } from 'framer-motion'
+import { logger } from '../../utils/logger'
 //import { Cancel } from '@material-ui/icons'
 
 import style from './Tweet.module.scss'
@@ -46,6 +47,7 @@ const Tweet = (props: any) => {
   const token: string = authState.user.token
 
   useEffect(() => {
+    logger('likes from tweet >>>', tweet.likes)
     setLikeStat({
       like: tweet.likes.length,
       isLiked: tweet.likes.includes(userObj._id),
@@ -100,38 +102,64 @@ const Tweet = (props: any) => {
   }
 
   const likeHandler = async () => {
-    const userParams = {
-      userId: userObj._id,
+    try {
+      const userParams = {
+        likerId: userObj._id,
+        ownerId: user._id,
+      }
+      const endpoint = `${process.env.REACT_APP_BASE_URL}post/${tweet._id}/like`
+      setLikeStat({
+        ...likeStat,
+        like: likeStat.isLiked ? likeStat.like - 1 : likeStat.like + 1,
+        isLiked: !likeStat.isLiked,
+      })
+      const likeReq = await put(endpoint, userParams)
+
+      logger('REQ RESPONSE::: ', likeReq)
+    } catch (err) {
+      logger(err)
+      setLikeStat({
+        ...likeStat,
+        like: likeStat.isLiked ? likeStat.like - 1 : likeStat.like + 1,
+        isLiked: !likeStat.isLiked,
+      })
     }
-    const endpoint = `${process.env.REACT_APP_BASE_URL}post/${tweet._id}/like`
-    setLikeStat({
-      ...likeStat,
-      like: likeStat.isLiked ? likeStat.like - 1 : likeStat.like + 1,
-      isLiked: !likeStat.isLiked,
-    })
-    const likeReq = await put(endpoint, userParams)
-    console.log('REQ RESPONSE::: ', likeReq)
   }
+
   const retweetHandler = async () => {
-    const userParams = {
-      userId: userObj._id,
+    try {
+      const userParams = {
+        retweeterId: userObj._id,
+        ownerId: user._id,
+      }
+      const endpoint = `${process.env.REACT_APP_BASE_URL}post/${tweet._id}/retweet`
+      setRetweetStat({
+        ...retweetStat,
+        retweet: retweetStat.isRetweeted
+          ? retweetStat.retweet - 1
+          : retweetStat.retweet + 1,
+        isRetweeted: !retweetStat.isRetweeted,
+      })
+
+      const retweetReq = await put(endpoint, userParams)
+
+      logger('REQ RESPONSE::: ', retweetReq)
+    } catch (err) {
+      logger(err)
+      setRetweetStat({
+        ...retweetStat,
+        retweet: retweetStat.isRetweeted
+          ? retweetStat.retweet - 1
+          : retweetStat.retweet + 1,
+        isRetweeted: !retweetStat.isRetweeted,
+      })
     }
-    const endpoint = `${process.env.REACT_APP_BASE_URL}post/${tweet._id}/retweet`
-    setRetweetStat({
-      ...retweetStat,
-      retweet: retweetStat.isRetweeted
-        ? retweetStat.retweet - 1
-        : retweetStat.retweet + 1,
-      isRetweeted: !retweetStat.isRetweeted,
-    })
-    const retweetReq = await put(endpoint, userParams)
-    console.log('REQ RESPONSE::: ', retweetReq)
   }
 
   return (
     <div className={style.container} onClick={modalStateHandler}>
       <div className={style.content}>
-        <Link to={`profile/${user.username}`} className={style.left}>
+        <Link to={`/profile/${user.username}`} className={style.left}>
           <img src={user.profilePicture || avi} alt="avatar" />
         </Link>
         <div className={style.right}>
@@ -180,10 +208,10 @@ const Tweet = (props: any) => {
             {tweet.img && <img src={tweet?.img} alt="tweetimg" />}
           </div>
           <div className={style.rightBtm}>
-            <div className={style.actions}>
+            <Link to={`/singletweet/${tweet._id}`} className={style.actions}>
               <img src={reply} alt="reply" />
               <p></p>
-            </div>
+            </Link>
             <div className={style.actions}>
               <img
                 src={retweetStat.isRetweeted ? retweetFill : retweet}

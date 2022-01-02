@@ -107,6 +107,7 @@ const Update: React.FC<Modal> = (props) => {
           profilePicture: s3ImgUrl || '',
         },
       },
+      latestFollow: Math.random() * 10,
     })
     setResponse({
       ...response,

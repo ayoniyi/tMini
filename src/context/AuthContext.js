@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   error: false,
   latestTweet: '',
   latestFollow: '',
+  latestNote: '',
 }
 
 export const AuthContext = createContext(INITIAL_STATE)

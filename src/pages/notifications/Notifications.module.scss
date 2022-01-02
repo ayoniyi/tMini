@@ -1,0 +1,43 @@
+@import '../../variables';
+@import '../../mixins';
+.container {
+  //background: gray;
+  .top {
+    position: fixed;
+    width: 47%;
+    max-width: 600px;
+    color: #fff;
+    padding: 1.5em 0.7em;
+    border-bottom: 1px solid #2f3336;
+    p {
+      font-size: 1.2em;
+      font-weight: bolder;
+    }
+  }
+  .itemBox {
+    padding-top: 5em;
+
+    .item {
+      //   background: gray;
+      padding: 1.5em 2.5em 2em 3.5em;
+      border-bottom: 1px solid #2f3336;
+      .itemTop {
+        img {
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+      h2 {
+        color: #fff;
+        font-size: 1em;
+        margin: 0.8em 0;
+      }
+      p {
+        color: #6e767d;
+        font-size: 0.9em;
+      }
+    }
+  }
+}

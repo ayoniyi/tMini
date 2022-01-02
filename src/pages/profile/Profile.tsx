@@ -173,7 +173,7 @@ const Profile = () => {
               following: [...authState.user.user.following, paramUser._id],
             },
           },
-          latestFollow: paramUser._id,
+          latestFollow: Math.random() * 10,
         })
         logger('follow>>', followReq)
         logger(authState.user.user.following)
@@ -418,9 +418,15 @@ const Profile = () => {
                   </div>
                 ) : (
                   <>
-                    {tweetView.currentTweets.map((tweet: any) => (
-                      <Tweet key={tweet._id} tweetFull={tweet} />
-                    ))}
+                    {tweetView.currentTweets.length >= 1 &&
+                      tweetView.currentTweets.map((tweet: any) => (
+                        <Tweet key={tweet._id} tweetFull={tweet} />
+                      ))}
+                    {tweetView.currentTweets.length < 1 && (
+                      <div className={style2.loaderBox}>
+                        <p style={{ color: '#fff' }}>Nothing to see here yet</p>
+                      </div>
+                    )}
                     <div className={style2.loaderBox}>
                       <p style={{ color: '#fff' }}>{status.errMsg}</p>
                     </div>
