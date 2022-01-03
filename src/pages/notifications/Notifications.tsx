@@ -71,7 +71,7 @@ const Notifications = () => {
                 <>
                   {notifications.length >= 1 &&
                     notifications.map((note: any) => (
-                      <div className={style.item} key={note.description}>
+                      <div className={style.item} key={note._id}>
                         <Link
                           className={style.itemTop}
                           to={`/profile/${note.username}`}

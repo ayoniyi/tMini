@@ -22,6 +22,15 @@
       transition: 0.17s ease-in;
     }
   }
+  /*** **/
+  @media (max-width: 450px) {
+    .topImg {
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
 
   input {
     outline: none;
@@ -47,6 +56,12 @@
       color: rgba(128, 128, 128, 0.555);
     }
   }
+  /*** **/
+  @media (max-width: 450px) {
+    input {
+      font-size: 1em;
+    }
+  }
 }
 .bottom {
   // background: pink;
@@ -67,6 +82,12 @@
     }
     &:disabled {
       opacity: 0.5;
+    }
+  }
+  /*** **/
+  @media (max-width: 450px) {
+    button {
+      @include buttonRegular($blueBtn, 30%, 36px);
     }
   }
 }

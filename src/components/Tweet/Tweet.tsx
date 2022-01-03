@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
+//import ReactDOM from 'react-dom'
 import { get, put } from '../../utils/axiosLib'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -30,6 +31,7 @@ interface RetweetStat {
 
 const Tweet = (props: any) => {
   const [user, setUser] = useState<any>({})
+  //const portalElement: any = document.getElementById('msgBox')
   const [modal, setModal] = useState<boolean>(false)
   // const time: any = format(props.tweetFull.createdAt)
   // const timeForm: any = time.charAt(0) + time.charAt(2)
@@ -45,6 +47,11 @@ const Tweet = (props: any) => {
   const [authState, setAuthState] = useContext<any>(AuthContext)
   const userObj: any = authState.user.user
   const token: string = authState.user.token
+  const [info, setInfo] = useState<any>({
+    infoState: false,
+    infoStatus: false,
+    infoRes: '',
+  })
 
   useEffect(() => {
     logger('likes from tweet >>>', tweet.likes)
@@ -115,6 +122,12 @@ const Tweet = (props: any) => {
       })
       const likeReq = await put(endpoint, userParams)
 
+      setInfo({
+        infoState: false,
+        infoStatus: false,
+        infoRes: ' ',
+      })
+
       logger('REQ RESPONSE::: ', likeReq)
     } catch (err) {
       logger(err)
@@ -126,6 +139,28 @@ const Tweet = (props: any) => {
     }
   }
 
+  const infoHandler = () => {
+    setInfo({
+      infoState: true,
+      infoStatus: true,
+      infoRes: "You can't retweet or like your own tweet on twitterMini",
+    })
+    setTimeout(() => {
+      setInfo({
+        infoState: true,
+        infoStatus: false,
+        infoRes: "You can't retweet or like your own tweet on twitterMini",
+      })
+    }, 2500)
+    setTimeout(() => {
+      setInfo({
+        infoState: false,
+        infoStatus: false,
+        infoRes: ' ',
+      })
+    }, 4000)
+  }
+
   const retweetHandler = async () => {
     try {
       const userParams = {
@@ -133,6 +168,7 @@ const Tweet = (props: any) => {
         ownerId: user._id,
       }
       const endpoint = `${process.env.REACT_APP_BASE_URL}post/${tweet._id}/retweet`
+
       setRetweetStat({
         ...retweetStat,
         retweet: retweetStat.isRetweeted
@@ -142,6 +178,11 @@ const Tweet = (props: any) => {
       })
 
       const retweetReq = await put(endpoint, userParams)
+
+      setInfo({
+        infoState: false,
+        infoRes: ' ',
+      })
 
       logger('REQ RESPONSE::: ', retweetReq)
     } catch (err) {
@@ -158,6 +199,23 @@ const Tweet = (props: any) => {
 
   return (
     <div className={style.container} onClick={modalStateHandler}>
+      {info.infoState && (
+        <>
+          {/* {ReactDOM.createPortal( */}
+          <div
+            className={`${style.infoBox}${
+              info.infoStatus === true
+                ? ' animate__animated animate__zoomIn'
+                : ' animate__animated animate__zoomOut'
+            }`}
+          >
+            <p>{info.infoRes}</p>
+          </div>
+          {/* , 
+        portalElement,
+          )}  */}
+        </>
+      )}
       <div className={style.content}>
         <Link to={`/profile/${user.username}`} className={style.left}>
           <img src={user.profilePicture || avi} alt="avatar" />
@@ -213,27 +271,73 @@ const Tweet = (props: any) => {
               {tweet.replies.length > 0 && <p>{tweet.replies.length}</p>}
             </Link>
             <div className={style.actions}>
-              <img
-                src={retweetStat.isRetweeted ? retweetFill : retweet}
-                alt="retweet"
-                onClick={retweetHandler}
-              />
+              {userObj._id !== tweet.userId && (
+                <img
+                  src={
+                    retweetStat.isRetweeted && info.infoState === false
+                      ? retweetFill
+                      : retweet
+                  }
+                  alt="retweet"
+                  onClick={retweetHandler}
+                />
+              )}
+              {userObj._id === tweet.userId && (
+                <img
+                  src={
+                    retweetStat.isRetweeted && info.infoState === false
+                      ? retweetFill
+                      : retweet
+                  }
+                  alt="retweet"
+                  onClick={infoHandler}
+                />
+              )}
               {retweetStat.retweet > 0 && (
-                <p className={retweetStat.isRetweeted ? style.green : ''}>
+                <p
+                  className={
+                    retweetStat.isRetweeted && info.infoState === false
+                      ? style.green
+                      : ''
+                  }
+                >
                   {' '}
                   {retweetStat.retweet}
                 </p>
               )}
             </div>
             <div className={style.actions}>
-              <img
-                src={likeStat.isLiked ? likeFill : like}
-                alt="like"
-                onClick={likeHandler}
-                //className="animate__animated animate__zoomInUp"
-              />
+              {userObj._id !== tweet.userId && (
+                <img
+                  src={
+                    likeStat.isLiked && info.infoState === false
+                      ? likeFill
+                      : like
+                  }
+                  alt="like"
+                  onClick={likeHandler}
+                  //className="animate__animated animate__zoomInUp"
+                />
+              )}
+              {userObj._id === tweet.userId && (
+                <img
+                  src={
+                    likeStat.isLiked && info.infoState === false
+                      ? likeFill
+                      : like
+                  }
+                  alt="like"
+                  onClick={infoHandler}
+                />
+              )}
               {likeStat.like > 0 && (
-                <p className={likeStat.isLiked ? style.red : ''}>
+                <p
+                  className={
+                    likeStat.isLiked && info.infoState === false
+                      ? style.red
+                      : ''
+                  }
+                >
                   {' '}
                   {likeStat.like}
                 </p>

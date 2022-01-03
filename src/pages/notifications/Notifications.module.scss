@@ -9,6 +9,7 @@
     color: #fff;
     padding: 1.5em 0.7em;
     border-bottom: 1px solid #2f3336;
+    background: rgba(0, 0, 0, 0.582);
     p {
       font-size: 1.2em;
       font-weight: bolder;
@@ -38,6 +39,20 @@
         color: #6e767d;
         font-size: 0.9em;
       }
+    }
+  }
+}
+@media (max-width: 1209px) {
+  .container {
+    .top {
+      width: 45%;
+    }
+  }
+}
+@media (max-width: 550px) {
+  .container {
+    .top {
+      width: 100%;
     }
   }
 }

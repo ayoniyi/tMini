@@ -135,15 +135,23 @@
 
 @media (max-width: 1160px) {
   .container {
-    width: 11%;
+    width: 10%;
+    //background: gray;
+    left: 10%;
   }
   .items {
     margin: 0;
   }
+  .top {
+    //background: cornsilk;
+    width: 65%;
+    @include flexRegular(row, center);
+    align-items: center;
+  }
   .navItem {
     @include flexRegular(row, center);
     padding: 1em;
-    //background: gray;
+    //background: cornsilk;
     img {
       margin-right: 0;
     }
@@ -154,48 +162,75 @@
   }
   .tweet {
     @include flexRegular(row, center);
-    width: 85%;
+    width: 65%;
     margin-top: 2.5em;
+    //background: cornsilk;
     //background: gray;
     button {
       display: none;
     }
     img {
       display: block;
-      width: 100%;
-      min-width: 38px;
-      height: 39px;
+      width: 90%;
+      // min-width: 38px;
+      // height: 39px;
       //width: 90%;
     }
+  }
+  .bottomBox {
+    //background: cornsilk;
+    width: 65%;
+    @include flexRegular(row, center);
+    .btmItem {
+      width: 100%;
+    }
+    p {
+      display: none;
+    }
+    img {
+      margin-right: 0;
+    }
+  }
+}
+@media (max-width: 881px) {
+  .tweet {
+    img {
+      display: none;
+    }
+  }
+  .bottomBox {
+    display: none;
   }
 }
 @media (max-width: 550px) {
   .container {
     height: 8vh;
-    width: 100%;
+    width: 100vw;
     padding: 0.5em 0;
     bottom: 0;
     margin: 0;
-    // background: pink;
+    z-index: 4;
+    left: 0;
+    //margin-left: -3em;
   }
   .top {
     display: none;
   }
   .items {
     margin: 0;
-    @include flexRegular(row, center);
+    @include flexRegular(row, space-around);
     align-items: center;
-    //background: gray;
     border-top: 1px solid rgba(128, 128, 128, 0.335);
-    padding: 1em 1em;
+    padding: 1em 0 1em 0;
     width: 100vw;
   }
   .navItem {
-    //background: pink;
+    // background: gray;
+    // border: 1px solid pink;
     width: 100%;
     max-width: 900px;
     padding: 0;
-    margin-right: 2em;
+    // margin-right: 2em;
     margin-bottom: 0;
     img {
       margin-right: 0;
@@ -204,7 +239,10 @@
       margin-right: 0;
     }
   }
-
+  .disable {
+    padding: 0 0;
+    border-radius: 0px;
+  }
   .tweet {
     display: none;
   }
