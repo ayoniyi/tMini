@@ -155,6 +155,11 @@
 
     //background: red;
   }
+  @media (max-width: 480px) {
+    .modalForm {
+      margin: 7em 0 3em 0;
+    }
+  }
 }
 
 .errMsg {
@@ -194,13 +199,29 @@
 }
 @media (max-width: 480px) {
   .modal {
-    //height: 95vh;
-    top: 5vh;
-    width: 99vw;
-    left: 0.5vw;
-    right: 0.5vw;
+    height: 100vh;
+    top: 0;
+    width: 100vw;
+    left: 0vw;
+    right: 0vw;
     padding: 1rem 0;
   }
+  .topRight {
+    button {
+      margin-top: 0.5em;
+    }
+  }
+  .modalBody {
+    .aviBox {
+      .avatar,
+      .aviOverlay,
+      input {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  }
+
   .modalForm {
     .doubleInputs {
       @include flexRegular(column, flex-start);
