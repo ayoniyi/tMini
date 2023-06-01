@@ -1,5 +1,5 @@
-@import '../../variables';
-@import '../../mixins';
+@import "../../variables";
+@import "../../mixins";
 
 .container {
   background: black;
@@ -56,7 +56,7 @@
     .termsBtm {
       font-size: 0.65em;
       color: #6e767d;
-      width: 70%;
+      width: 50%;
     }
     span {
       color: $blueTxt;
@@ -122,6 +122,9 @@
       }
     }
     .rightBottom {
+      .termsBtm {
+        width: 60%;
+      }
       button {
         @include buttonRegular(none, 25vw, 42px);
       }
